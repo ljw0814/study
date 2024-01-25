@@ -11,23 +11,24 @@ public class test3 {
         System.out.println("돈의 액수를 입력하세요:");
         int money = scanner.nextInt();
 
-        int[] unitValues = { 50000, 10000, 5000, 1000, 500, 100, 50, 10, 1 };
+        int[] Values = { 50000, 10000, 5000, 1000, 500, 100, 50, 10, 1 };
 
         System.out.println("입금한 돈을 변환한 결과:");
 
-        for (int unit : unitValues) { //unitValues배열을 unit에 할당한다.
+        for (int unit : Values) { //Values배열을 unit에 할당한다.
             int count = money / unit;
             if (count > 0) {
                 System.out.println(unit + "원: " + count + "개");
+                money %= unit;
             }
-            money %= unit;
+            //money %= unit; -> 위치가 if문 안이나 for문 안이면 정상출력됨.
         }
 
         scanner.close();
     }
 }
 /*
- * for (int unit : unitValues)에서 unit은 unitValues 배열의 각 요소를 순회하면서 현재 요소를 나타내는
+ * for (int unit : Values)에서 unit은 Values 배열의 각 요소를 순회하면서 현재 요소를 나타내는
  * 변수입니다.
  * 
  * int count = money / unit;에서 money / unit은 현재 화폐 단위로 나눈 몫을 계산합니다. 이는 해당 화폐
@@ -41,6 +42,6 @@ public class test3 {
  * money %= unit;은 이미 변환한 화폐 단위에 해당하는 금액을 빼주는 부분입니다. 이렇게 함으로써 다음 화폐 단위로 나눌 때
  * 올바른 나머지를 계산할 수 있습니다.
  * 
- * 여기서 예를 들어 설명하면, 사용자가 78670원을 입력했다고 가정해봅시다. unitValues 배열을 큰 단위부터 작은 단위로 순회하면서
+ * 여기서 예를 들어 설명하면, 사용자가 78670원을 입력했다고 가정해봅시다. Values 배열을 큰 단위부터 작은 단위로 순회하면서
  * 각 화폐 단위로 나눈 몫과 나머지를 계산하고 출력합니다.
  */

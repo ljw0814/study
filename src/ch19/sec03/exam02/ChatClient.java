@@ -19,6 +19,7 @@ public class ChatClient {
 		Scanner scanner = null;
 
 		try {
+			
 			socket = new Socket();
 			socket.connect(new InetSocketAddress(SERVER_IP, ChatServer.PORT));
 

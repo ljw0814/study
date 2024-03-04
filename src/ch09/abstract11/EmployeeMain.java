@@ -1,18 +1,19 @@
 package ch09.abstract11;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 public class EmployeeMain {
-	// instanceof 연산자를 사용하여 객체의 타입을 확인하는 메서드
 	public static void testInstanceOf() {
-		// RegularEmployee 객체 생성
 		RegularEmployee regEmp = 
 				new RegularEmployee("1111", "홍길동", 7000, 3000);
-		 // Employee 타입의 참조 변수에 RegularEmployee 객체 대입
 		Employee emp = regEmp;
-		 // emp가 RegularEmployee의 객체인지 확인
+		
 		if(emp instanceof RegularEmployee)
 			System.out.println("emp는 RegularEmployee의 객체이거나"
 								+ " 자식 객체입니다.");
-		 // emp가 TempEmployee의 객체인지 확인
 		if(emp instanceof TempEmployee)
 			System.out.println("emp는 TempEmployee의 객체이거나"
 								+ " 자식 객체입니다.");
@@ -20,12 +21,34 @@ public class EmployeeMain {
 			System.out.println("emp는 ParTimeEmployee의 객체이거나"
 								+ " 자식 객체입니다.");		
 	}
-	public static void main(String[] args) {
-		// EmployeeManager 객체 생성
+	public static void main(String[] args) throws Exception{
+		
+		FileOutputStream fos = new FileOutputStream("C:/Temp/object.dat");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		
+		
+		
 		EmployeeManager em = new EmployeeManager();
-		// EmployeeManager의 run 메서드 실행
 		em.run();
-//		위에서 주석 처리된 메서드 호출 (주석 해제 후 실행하면 확인 가능)
-//		testInstanceOf();
+		
+		// EmployeeManager 내의 empArr 배열이 null일 경우 배열 객체를 생성
+        if (em.getEmpArr() == null) {
+            em.setEmpArr(new Employee[10]); // 예시로 크기를 10으로 지정
+        }
+		
+		oos.writeObject(em);
+	
+		
+		oos.flush(); oos.close(); fos.close();
+		
+		FileInputStream fis = new FileInputStream("C:/Temp/object.dat");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		EmployeeManager  emp = (EmployeeManager) ois.readObject();
+		
+		ois.close(); fis.close();
+		
+		System.out.println(emp);
+		//testInstanceOf();
 	}
 }
